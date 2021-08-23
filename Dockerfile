@@ -1,3 +1,8 @@
+#
+# ROS2 with ORBSLAM2, RTABMap, ZED, Realsense2, ODrive Robotics, Slam-toolbox, NAV2
+#
+
+
 # This dockerfile can be configured via --build-arg
 # Build context must be the /navigation2 root folder for COPY.
 # Example build command:
@@ -6,12 +11,28 @@
 # docker build -t nav2:latest \
 #   --build-arg UNDERLAY_MIXINS \
 #   --build-arg OVERLAY_MIXINS ./
-ARG FROM_IMAGE=osrf/ros2:nightly
+
+# local base image!
+ARG FROM_IMAGE=ros:foxy-slam-l4t-r32.5.1
 ARG UNDERLAY_WS=/opt/underlay_ws
 ARG OVERLAY_WS=/opt/overlay_ws
 
 # multi-stage for caching
 FROM $FROM_IMAGE AS cacher
+
+SHELL ["/bin/bash", "-c"] 
+ENV SHELL /bin/bash
+
+ENV DEBIAN_FRONTEND=noninteractive
+ARG MAKEFLAGS=-j$(nproc)
+ENV LANG=en_US.UTF-8 
+ENV PYTHONIOENCODING=utf-8
+RUN locale-gen en_US en_US.UTF-8 && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+
+ENV PYTORCH_PATH="/usr/local/lib/python3.6/dist-packages/torch"
+ENV LD_LIBRARY_PATH="${PYTORCH_PATH}/lib:${LD_LIBRARY_PATH}"
+
+ARG ROS_ENVIRONMENT=${ROS_ROOT}/install/setup.bash
 
 # clone underlay source
 ARG UNDERLAY_WS

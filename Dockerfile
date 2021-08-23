@@ -61,8 +61,17 @@ FROM $FROM_IMAGE AS builder
 RUN apt-get update && apt-get install -q -y \
       ccache \
       lcov \
+      gazebo11 \
+      libgazebo11-dev \
+      ros-foxy-gazebo-dev \
+      ros-foxy-gazebo-plugins \
+      ros-foxy-gazebo-msgs  \
+      ros-foxy-gazebo-ros-pkgs \
+      ros-foxy-gazebo-ros \
     && rosdep update \
     && rm -rf /var/lib/apt/lists/*
+
+   
 
 # install underlay dependencies
 ARG UNDERLAY_WS

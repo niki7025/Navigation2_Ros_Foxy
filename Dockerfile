@@ -71,6 +71,7 @@ COPY --from=cacher /tmp/$UNDERLAY_WS ./
 RUN . /opt/ros/$ROS_DISTRO/install/setup.sh && \
     apt-get update && rosdep install -q -y \
       --from-paths src \
+      --rosdistro ${ROS_DISTRO} \
       --skip-keys " \
         slam_toolbox \
         " \
@@ -97,6 +98,7 @@ WORKDIR $OVERLAY_WS
 COPY --from=cacher /tmp/$OVERLAY_WS ./
 RUN . $UNDERLAY_WS/install/setup.sh && \
     apt-get update && rosdep install -q -y \
+      --rosdistro ${ROS_DISTRO} \
       --from-paths src \
         $UNDERLAY_WS/src \
       --skip-keys " \

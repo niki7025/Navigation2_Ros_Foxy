@@ -33,7 +33,6 @@ ENV PYTORCH_PATH="/usr/local/lib/python3.6/dist-packages/torch"
 ENV LD_LIBRARY_PATH="${PYTORCH_PATH}/lib:${LD_LIBRARY_PATH}"
 
 ARG ROS_ENVIRONMENT=${ROS_ROOT}/install/setup.bash
-ENV ROS_ENV_INSTALL_FOLDER=${ROS_ROOT}/install/
 
 # clone underlay source
 ARG UNDERLAY_WS
@@ -69,7 +68,7 @@ RUN apt-get update && apt-get install -q -y \
 ARG UNDERLAY_WS
 WORKDIR $UNDERLAY_WS
 COPY --from=cacher /tmp/$UNDERLAY_WS ./
-RUN . ${ROS_ENV_INSTALL_FOLDER}setup.sh && \
+RUN . /opt/ros/$ROS_DISTRO/install/setup.sh && \
     apt-get update && rosdep install -q -y \
       --from-paths src \
       --skip-keys " \
@@ -82,7 +81,7 @@ RUN . ${ROS_ENV_INSTALL_FOLDER}setup.sh && \
 COPY --from=cacher $UNDERLAY_WS ./
 ARG UNDERLAY_MIXINS="release ccache"
 ARG FAIL_ON_BUILD_FAILURE=True
-RUN . ${ROS_ENV_INSTALL_FOLDER}setup.sh && \
+RUN . /opt/ros/$ROS_DISTRO/install/setup.sh && \
     colcon build \
       --symlink-install \
       --mixin $UNDERLAY_MIXINS \

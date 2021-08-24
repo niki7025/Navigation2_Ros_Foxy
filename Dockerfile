@@ -44,6 +44,18 @@ RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb
   apt-get install -y gazebo11 \
   libgazebo11-dev
 
+# install gazebo ros packages
+WORKDIR /
+RUN mkdir -p  ${ROS_ROOT}/src && \
+    cd ${ROS_ROOT} && \
+    wget https://raw.githubusercontent.com/ros-simulation/gazebo_ros_pkgs/ros2/gazebo_ros_pkgs.repos && \
+    vcs import src < gazebo_ros_pkgs.repos && \
+    vcs custom --args checkout foxy && \
+    source ${ROS_ENVIRONMENT} && \
+    rosdep install --from-paths src --ignore-src -r -y && \
+    colcon build --symlink-install
+
+
 # clone underlay source
 ARG UNDERLAY_WS
 WORKDIR $UNDERLAY_WS/src

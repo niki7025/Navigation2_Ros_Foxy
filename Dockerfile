@@ -35,10 +35,11 @@ ENV LD_LIBRARY_PATH="${PYTORCH_PATH}/lib:${LD_LIBRARY_PATH}"
 ARG ROS_ENVIRONMENT=${ROS_ROOT}/install/setup.bash
 
 # install gazebo
-#WORKDIR /
-#COPY ./install_gazebo.sh /
-#RUN chmod +x /install_gazebo.sh && ./install_gazebo.sh
-RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list' && \
+WORKDIR /
+COPY ./install_gazebo.sh /
+RUN chmod +x /install_gazebo.sh && ./install_gazebo.sh
+RUN apt-get remove '.*gazebo.*' '.*sdformat.*' '.*ignition-math.*' '.*ignition-msgs.*' '.*ignition-transport.*' && \
+  sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list' && \
   wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add - && \
   apt-get update && \
   apt-get install -y gazebo11 \

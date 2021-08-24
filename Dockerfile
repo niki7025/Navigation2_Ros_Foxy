@@ -42,9 +42,9 @@ RUN apt-get remove -y '.*gazebo.*' '.*sdformat.*' '.*ignition-math.*' '.*ignitio
   apt-get update -y && \
   apt-get install -y gazebo11 \
   libgazebo11-dev
-COPY ./install_gazebo.sh /
-RUN apt-get update && \
-    chmod +x /install_gazebo.sh && ./install_gazebo.sh -y
+#COPY ./install_gazebo.sh /
+#RUN apt-get update && \
+#    chmod +x /install_gazebo.sh && ./install_gazebo.sh -y
 
 
 # install gazebo ros packages

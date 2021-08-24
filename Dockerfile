@@ -50,7 +50,7 @@ RUN mkdir -p  ${ROS_ROOT}/src && \
     cd ${ROS_ROOT} && \
     wget https://raw.githubusercontent.com/ros-simulation/gazebo_ros_pkgs/ros2/gazebo_ros_pkgs.repos && \
     vcs import src < gazebo_ros_pkgs.repos && \
-    vcs custom --args checkout foxy && \
+    vcs custom --args checkout foxy || true && \
     source ${ROS_ENVIRONMENT} && \
     rosdep install --from-paths src --ignore-src -r -y && \
     colcon build --symlink-install

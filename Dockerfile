@@ -36,10 +36,10 @@ ARG ROS_ENVIRONMENT=${ROS_ROOT}/install/setup.bash
 
 # install gazebo
 WORKDIR /
-RUN apt-get remove '.*gazebo.*' '.*sdformat.*' '.*ignition-math.*' '.*ignition-msgs.*' '.*ignition-transport.*' && \
+RUN apt-get remove -y '.*gazebo.*' '.*sdformat.*' '.*ignition-math.*' '.*ignition-msgs.*' '.*ignition-transport.*' && \
   sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list' && \
   wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add - && \
-  apt-get update && \
+  apt-get update -y && \
   apt-get install -y gazebo11 \
   libgazebo11-dev
 COPY ./install_gazebo.sh /

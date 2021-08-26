@@ -56,6 +56,7 @@ RUN mkdir -p  ${ROS_ROOT}/src && \
     vcs custom --args checkout foxy || true && \
     source ${ROS_ENVIRONMENT} && \
     source /usr/share/gazebo/setup.sh && \
+    source /usr/share/gazebo-11/setup.sh && \
     rosdep install --from-paths src --ignore-src -r -y && \
     colcon build --symlink-install
 

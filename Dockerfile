@@ -55,6 +55,7 @@ RUN mkdir -p  ${ROS_ROOT}/src && \
     vcs import src < gazebo_ros_pkgs.repos && \
     vcs custom --args checkout foxy || true && \
     source ${ROS_ENVIRONMENT} && \
+    source /usr/share/gazebo/setup.sh && \
     rosdep install --from-paths src --ignore-src -r -y && \
     colcon build --symlink-install
 

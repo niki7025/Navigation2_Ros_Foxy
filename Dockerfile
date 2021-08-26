@@ -98,7 +98,7 @@ RUN . /opt/ros/$ROS_DISTRO/install/setup.sh && \
       --from-paths src \
       --rosdistro ${ROS_DISTRO} \
       --os=ubuntu:bionic \
-      --skip-keys " \
+      --skip-keys "libopencv-dev libopencv-contrib-dev libopencv-imgproc-dev python-opencv python3-opencv \
         slam_toolbox \
         " \
       --ignore-src \
